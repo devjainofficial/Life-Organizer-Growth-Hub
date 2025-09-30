@@ -30,12 +30,20 @@ addSkillBtn.addEventListener('click', () => {
   skillInput.value = '';
 });
 
-// Motivational Quotes
+// Motivational Quotes with categories
 const quotes = [
-  "Your journey starts today.",
-  "Small steps lead to big results.",
-  "Consistency beats intensity.",
-  "Every day is a new chance to grow."
+  { text: "Your journey starts today.", category: "Motivation" },
+  { text: "Small steps lead to big results.", category: "Motivation" },
+  { text: "Consistency beats intensity.", category: "Motivation" },
+  { text: "Every day is a new chance to grow.", category: "Life" },
+  { text: "Every day is a chance to improve.", category: "Motivation" },
+  { text: "Code is like humor. When you have to explain it, it’s bad.", category: "Tech" },
+  { text: "Debugging is like being the detective in a crime movie where you are also the murderer.", category: "Tech" },
+  { text: "Learning never exhausts the mind.", category: "Life" },
+  { text: "The best way to predict the future is to create it.", category: "Motivation" },
+  { text: "Simplicity is the soul of efficiency.", category: "Tech" },
+  { text: "Don’t wait for opportunity. Create it.", category: "Motivation" },
+  { text: "Mistakes are proof that you are trying.", category: "Life" }
 ];
 
 const quoteDisplay = document.getElementById('quoteDisplay');
@@ -43,7 +51,7 @@ const newQuoteBtn = document.getElementById('newQuoteBtn');
 
 newQuoteBtn.addEventListener('click', () => {
   const randomIndex = Math.floor(Math.random() * quotes.length);
-  quoteDisplay.textContent = quotes[randomIndex];
+  quoteDisplay.textContent = quotes[randomIndex].text;
 });
 
 // Pomodoro Timer (simple)
