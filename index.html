@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Life Organizer & Growth Hub</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <h1>Life Organizer & Growth Hub</h1>
@@ -27,6 +29,15 @@
       <input type="text" id="skillInput" placeholder="Add a new skill">
       <button id="addSkillBtn">Add Skill</button>
       <ul id="skillList"></ul>
+    </section>
+
+
+    <section id="habits">
+      <h2>Habit Tracker</h2>
+      <input type="text" id="habitInput" placeholder="Add a new habit">
+      <button id="addHabitBtn">Add Habit</button>
+      <ul id="habitList"></ul>
+      <p><strong>Completed Today:</strong> <span id="habitCount">0</span></p>
     </section>
 
     <!-- Motivational Quotes -->
@@ -51,4 +62,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
