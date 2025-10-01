@@ -103,7 +103,6 @@ function updateProgress(li, delta) {
 }
 
 // Motivational Quotes with categories
-=======
 function loadSkills() {
   const skills = JSON.parse(localStorage.getItem('skills')) || [];
   skillList.innerHTML = '';
