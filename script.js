@@ -1,8 +1,33 @@
-// Theme Toggle
+// ====== Multi-Theme Toggle ======
+const themes = [
+  { name: 'default', class: '', icon: '🌗', label: 'Default' },
+  { name: 'blue', class: 'theme-blue', icon: '🌊', label: 'Calming Blue' },
+  { name: 'orange', class: 'theme-orange', icon: '🌅', label: 'Sunset Orange' }
+];
+let currentTheme = 0;
+
 const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function applyTheme(idx) {
+  document.body.className = themes[idx].class;
+  themeIcon.textContent = themes[idx].icon;
+  themeLabel.textContent = themes[idx].label;
+  localStorage.setItem('themeIdx', idx);
+}
+
 themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
+  currentTheme = (currentTheme + 1) % themes.length;
+  applyTheme(currentTheme);
 });
+
+// On load, restore theme
+const savedIdx = parseInt(localStorage.getItem('themeIdx'), 10);
+if (!isNaN(savedIdx) && savedIdx >= 0 && savedIdx < themes.length) {
+  currentTheme = savedIdx;
+}
+applyTheme(currentTheme);
 
 // Daily Planner
 const taskInput = document.getElementById('taskInput');

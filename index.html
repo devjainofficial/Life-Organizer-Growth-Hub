@@ -7,46 +7,59 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+
+  <div class="theme-toggle-container">
+    <button id="themeToggle" aria-label="Switch Theme">
+      <span id="themeIcon">🌗</span>
+      <span id="themeLabel">Switch Theme</span>
+    </button>
+  </div>
+  <header class="main-header">
     <h1>Life Organizer & Growth Hub</h1>
-    <button id="themeToggle">Switch Theme</button>
+    <p class="subtitle">Your personal space for clarity, growth, and balance</p>
   </header>
 
-  <main>
-    <!-- Daily Planner -->
-    <section id="planner">
-      <h2>Daily Planner</h2>
-      <input type="text" id="taskInput" placeholder="Add a new task">
-      <button id="addTaskBtn">Add Task</button>
-      <ul id="taskList"></ul>
+  <main class="main-content">
+    <section class="welcome-card">
+      <h2>Welcome!</h2>
+      <p>Organize your life, set goals, and track your growth in a beautiful, calming space.</p>
     </section>
-
-    <!-- Learning Tracker -->
-    <section id="learning">
-      <h2>Learning Tracker</h2>
-      <input type="text" id="skillInput" placeholder="Add a new skill">
-      <button id="addSkillBtn">Add Skill</button>
-      <ul id="skillList"></ul>
-    </section>
-
-    <!-- Motivational Quotes -->
-    <section id="quotes">
-      <h2>Motivational Quotes & Tips</h2>
-      <p id="quoteDisplay">“Your journey starts today.”</p>
-      <button id="newQuoteBtn">New Quote</button>
-    </section>
-
-    <!-- Pomodoro Timer -->
-    <section id="timer">
-      <h2>Focus Timer</h2>
-      <p id="timerDisplay">25:00</p>
-      <button id="startTimerBtn">Start</button>
-      <button id="resetTimerBtn">Reset</button>
-    </section>
+    <div class="cards-grid">
+      <!-- Daily Planner -->
+      <section id="planner" class="feature-card">
+        <h2>Daily Planner</h2>
+        <input type="text" id="taskInput" placeholder="Add a new task">
+        <button id="addTaskBtn">Add Task</button>
+        <ul id="taskList"></ul>
+      </section>
+      <!-- Learning Tracker -->
+      <section id="learning" class="feature-card">
+        <h2>Learning Tracker</h2>
+        <input type="text" id="skillInput" placeholder="Add a new skill">
+        <button id="addSkillBtn">Add Skill</button>
+        <ul id="skillList"></ul>
+      </section>
+      <!-- Motivational Quotes -->
+      <section id="quotes" class="feature-card">
+        <h2>Motivational Quotes & Tips</h2>
+        <p id="quoteDisplay">“Your journey starts today.”</p>
+        <button id="newQuoteBtn">New Quote</button>
+      </section>
+      <!-- Pomodoro Timer -->
+      <section id="timer" class="feature-card">
+        <h2>Focus Timer</h2>
+        <p id="timerDisplay">25:00</p>
+        <div class="timer-controls">
+          <button id="startTimerBtn">Start</button>
+          <button id="resetTimerBtn">Reset</button>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <footer>
+  <footer class="main-footer">
     <p>Contribute to this project and help it grow!</p>
+    <p>&copy; 2025 Life Organizer & Growth Hub</p>
   </footer>
 
   <script src="script.js"></script>
