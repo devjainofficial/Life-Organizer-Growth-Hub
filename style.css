@@ -1,100 +1,165 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #fdfdfd;
-  color: #333;
-  margin: 0;
-  padding: 0;
+/* Basic colors */
+:root {
+  --bg: #f7f9fb;
+  --text: #2c3e50;
+  --primary: #3498db;
+  --success: #2ecc71;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --muted: #95a5a6;
 }
 
+/* Dark theme */
+body.dark {
+  --bg: #1a1a2e;
+  --text: #f0f6ff;
+  --primary: #0f4c75;
+  --success: #27ae60;
+  --danger: #c0392b;
+  --warning: #e67e22;
+  --muted: #7f8c8d;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+
+h1, h2 {
+  margin: 0 0 1rem;
+}
+
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #4CAF50;
+  background: var(--primary);
   color: white;
-  padding: 1rem 2rem;
-  flex-wrap: wrap;
-  text-align: center;
+  padding: 1rem;
 }
 
-header h1 {
-  flex: 1 1 100%;
-  margin: 0.5rem 0;
+#themeToggle {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
 }
 
+/* Layout - 2 boxes per row */
 main {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  padding: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem;
 }
 
+/* Sections / Cards */
 section {
-  background-color: #fff;
+  background: white;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px; /* ensures equal height */
+}
+
+/* Inputs and Buttons */
+input[type="text"], button {
+  padding: 0.6rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  border: 1px solid var(--muted);
+  margin: 0.3rem 0;
+}
+
+input[type="text"]:focus {
+  border-color: var(--primary);
+  outline: none;
 }
 
 button {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 4px;
-  background-color: #4CAF50;
+  background: var(--success);
   color: white;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: bold;
 }
 
 button:hover {
-  background-color: #45a049;
+  opacity: 0.9;
 }
 
+/* Special buttons */
+#newQuoteBtn { background: var(--warning); }
+#startTimerBtn { background: var(--primary); }
+#resetTimerBtn { background: var(--muted); }
+#planner li button, #learning li button { background: var(--danger); }
+
+/* Lists */
 ul {
   list-style: none;
   padding: 0;
 }
 
 li {
-  padding: 0.5rem;
-  border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
 }
 
 li.done {
   text-decoration: line-through;
-  color: gray;
+  color: var(--muted);
 }
 
+/* Timer */
+#timerDisplay {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--danger);
+  margin: 1rem 0;
+}
+
+/* Footer */
 footer {
   text-align: center;
   padding: 1rem;
-  background-color: #f1f1f1;
+  background: #ecf0f1;
+  color: var(--muted);
 }
 
-body.dark {
-  background-color: #1e1e1e;
-  color: #ddd;
-}
-
+/* Dark Mode */
 body.dark section {
-  background-color: #2c2c2c;
+  background: #2c2c47;
+  color: var(--text);
 }
 
-/* Habit Tracker */
-#habits li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+body.dark h2 {
+  color: var(--text);
 }
 
-#habits input[type="checkbox"] {
-  margin-left: 10px;
+body.dark input[type="text"] {
+  background: #3e3e5c;
+  border: 1px solid #5d5d81;
+  color: var(--text);
 }
 
+body.dark li {
+  border-bottom: 1px solid #3e3e5c;
+}
+
+body.dark footer {
+  background: #141426;
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   main {
     grid-template-columns: 1fr;
@@ -103,5 +168,9 @@ body.dark section {
   header {
     flex-direction: column;
     text-align: center;
+  }
+
+  header h1 {
+    margin-bottom: 0.5rem;
   }
 }
