@@ -240,6 +240,7 @@ addHabitBtn.addEventListener("click", () => {
 loadHabits();
 
 // ================= QUOTES =================
+
 const quotes = [
   { text: "Your journey starts today.", category: "Motivation" },
   { text: "Small steps lead to big results.", category: "Motivation" },
@@ -260,11 +261,76 @@ const quotes = [
 
 const quoteDisplay = document.getElementById("quoteDisplay");
 const newQuoteBtn = document.getElementById("newQuoteBtn");
+const filterBtns = document.querySelectorAll('.quote-filter-btn');
+let activeCategories = new Set(['All']); // Support multiple categories
 
-newQuoteBtn.addEventListener("click", () => {
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  quoteDisplay.textContent = quotes[randomIndex].text;
+function setActiveFilter(category) {
+  if (category === 'All') {
+    // If "All" is clicked, deselect everything else and select only "All"
+    activeCategories.clear();
+    activeCategories.add('All');
+  } else {
+    // If a specific category is clicked
+    if (activeCategories.has('All')) {
+      // If "All" was selected, remove it and start fresh
+      activeCategories.clear();
+    }
+    
+    // Toggle the clicked category
+    if (activeCategories.has(category)) {
+      activeCategories.delete(category);
+    } else {
+      activeCategories.add(category);
+    }
+    
+    // If no categories are selected, default to "All"
+    if (activeCategories.size === 0) {
+      activeCategories.add('All');
+    }
+  }
+  
+  // Update button states
+  filterBtns.forEach(btn => {
+    if (activeCategories.has(btn.dataset.category)) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+  
+  showRandomQuote();
+}
+
+function showRandomQuote() {
+  let filtered;
+  
+  if (activeCategories.has('All')) {
+    // Show all quotes
+    filtered = quotes;
+  } else {
+    // Show quotes from selected categories
+    filtered = quotes.filter(q => activeCategories.has(q.category));
+  }
+  
+  if (filtered.length === 0) {
+    quoteDisplay.textContent = 'No quotes in selected categories.';
+    return;
+  }
+  
+  const randomIndex = Math.floor(Math.random() * filtered.length);
+  quoteDisplay.textContent = filtered[randomIndex].text;
+}
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    setActiveFilter(btn.dataset.category);
+  });
 });
+
+newQuoteBtn.addEventListener("click", showRandomQuote);
+
+// On load, set initial filter and quote
+setActiveFilter('All');
 
 // ================= POMODORO TIMER =================
 let timer;
