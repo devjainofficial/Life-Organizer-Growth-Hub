@@ -530,3 +530,174 @@ li.done {
     min-height: 44px; /* Better touch target */
   }
 }
+
+/* ====== SKILL TRACKER ENHANCEMENTS ====== */
+.skill-item {
+  background: var(--subtle);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--accent);
+  transition: all 0.3s ease;
+}
+
+.skill-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text);
+  flex: 1;
+  min-width: 120px;
+}
+
+.skill-level {
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--card-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.skill-controls {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.skill-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.skill-btn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  transform: scale(1.1);
+}
+
+.skill-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.progress-container {
+  position: relative;
+  height: 24px;
+  background: var(--card-bg);
+  border-radius: 12px;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  border-radius: 12px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+  z-index: 1;
+}
+
+.skill-timestamp {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.85rem;
+  color: var(--text);
+  opacity: 0.8;
+}
+
+.timestamp-icon {
+  font-size: 0.8rem;
+}
+
+.timestamp-text {
+  font-style: italic;
+}
+
+/* Animation for new/updated skills */
+@keyframes highlightUpdate {
+  0% {
+    background-color: rgba(108, 99, 255, 0.2);
+  }
+  100% {
+    background-color: var(--subtle);
+  }
+}
+
+.skill-item.highlight {
+  animation: highlightUpdate 2s ease;
+}
+
+/* ====== MOBILE RESPONSIVE FOR SKILLS ====== */
+@media (max-width: 768px) {
+  .skill-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .skill-name {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .skill-controls {
+    align-self: flex-end;
+  }
+  
+  .skill-item {
+    padding: 0.875rem;
+  }
+  
+  .progress-container {
+    height: 20px;
+  }
+  
+  .progress-text {
+    font-size: 0.8rem;
+  }
+  
+  .skill-timestamp {
+    font-size: 0.8rem;
+  }
+}
