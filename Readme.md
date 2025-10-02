@@ -72,7 +72,7 @@ Whether you're a student, professional, or anyone looking to boost productivity,
 
 ---
 
-## 🖼️ Screenshots
+![alt text](image-1.png)
 
 <div align="center">
 
@@ -232,18 +232,6 @@ We love contributions! Whether it's:
 ## 📄 License
 
 Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
-
----
-
-## 👥 Authors & Contributors
-
-**Project Creator:** [@whatsupsumit](https://github.com/whatsupsumit)
-
-A big thank you to all our contributors! 🙏
-
-<a href="https://github.com/whatsupsumit/Life-Organizer-Growth-Hub/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=whatsupsumit/Life-Organizer-Growth-Hub" />
-</a>
 
 ---
 
