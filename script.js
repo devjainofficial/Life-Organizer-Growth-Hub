@@ -94,6 +94,33 @@ addTaskBtn.addEventListener("click", () => {
   taskInput.value = "";
 });
 
+// Remove completed tasks functionality
+const removeCompletedBtn = document.getElementById("removeCompletedBtn");
+
+removeCompletedBtn.addEventListener("click", () => {
+  const completedTasks = document.querySelectorAll("#taskList li.done");
+  if (completedTasks.length === 0) {
+    alert("No completed tasks to remove!");
+    return;
+  }
+  
+  const confirmRemoval = confirm(`Are you sure you want to remove ${completedTasks.length} completed task(s)?`);
+  if (confirmRemoval) {
+    completedTasks.forEach(task => task.remove());
+    saveTasks();
+  }
+});
+
+// Add Enter key support for task input
+taskInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    if (taskInput.value.trim() === "") return;
+    createTaskElement(taskInput.value);
+    saveTasks();
+    taskInput.value = "";
+  }
+});
+
 loadTasks();
 
 // ================= SKILL TRACKER =================
