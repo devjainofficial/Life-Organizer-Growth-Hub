@@ -1,15 +1,39 @@
-// Theme Toggle
-const themeToggle = document.getElementById("themeToggle");
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
+// ====== Multi-Theme Toggle ======
+const themes = [
+  { name: 'default', class: '', icon: '🌗', label: 'Default' },
+  { name: 'blue', class: 'theme-blue', icon: '🌊', label: 'Calming Blue' },
+  { name: 'orange', class: 'theme-orange', icon: '🌅', label: 'Sunset Orange' }
+];
+let currentTheme = 0;
+
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function applyTheme(idx) {
+  document.body.className = themes[idx].class;
+  themeIcon.textContent = themes[idx].icon;
+  themeLabel.textContent = themes[idx].label;
+  localStorage.setItem('themeIdx', idx);
+}
+
+themeToggle.addEventListener('click', () => {
+  currentTheme = (currentTheme + 1) % themes.length;
+  applyTheme(currentTheme);
 });
+
+// On load, restore theme
+const savedIdx = parseInt(localStorage.getItem('themeIdx'), 10);
+if (!isNaN(savedIdx) && savedIdx >= 0 && savedIdx < themes.length) {
+  currentTheme = savedIdx;
+}
+applyTheme(currentTheme);
 
 // ================= TASK TRACKER =================
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
 
-// Store tasks in memory instead of localStorage
 let tasks = [];
 
 function loadTasks() {
@@ -77,7 +101,6 @@ const skillInput = document.getElementById("skillInput");
 const addSkillBtn = document.getElementById("addSkillBtn");
 const skillList = document.getElementById("skillList");
 
-// Skill data storage
 let skills = [];
 let skillIdCounter = 0;
 
@@ -89,15 +112,9 @@ function createSkillElement(skill) {
       <span class="skill-name">${skill.name}</span>
       <span class="skill-level">Level ${skill.level}/10</span>
       <div class="skill-controls">
-        <button class="skill-btn" onclick="decreaseSkill(${skill.id})" ${
-    skill.level <= 0 ? "disabled" : ""
-  }>-</button>
-        <button class="skill-btn" onclick="increaseSkill(${skill.id})" ${
-    skill.level >= 10 ? "disabled" : ""
-  }>+</button>
-        <button class="skill-btn" onclick="removeSkill(${
-          skill.id
-        })" style="background-color: #f44336;">×</button>
+        <button class="skill-btn" onclick="decreaseSkill(${skill.id})" ${skill.level <= 0 ? "disabled" : ""}>-</button>
+        <button class="skill-btn" onclick="increaseSkill(${skill.id})" ${skill.level >= 10 ? "disabled" : ""}>+</button>
+        <button class="skill-btn" onclick="removeSkill(${skill.id})" style="background-color: #f44336;">×</button>
       </div>
     </div>
     <div class="progress-container">
@@ -154,7 +171,6 @@ function updateSkillDisplay() {
 
 addSkillBtn.addEventListener("click", addSkill);
 
-// Allow Enter key to add skills
 skillInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     addSkill();
@@ -167,7 +183,6 @@ const addHabitBtn = document.getElementById("addHabitBtn");
 const habitList = document.getElementById("habitList");
 const habitCount = document.getElementById("habitCount");
 
-// Store habits in memory instead of localStorage
 let habits = [];
 
 function loadHabits() {
@@ -188,9 +203,7 @@ function saveHabits() {
 }
 
 function updateHabitCount() {
-  const checked = document.querySelectorAll(
-    '#habitList input[type="checkbox"]:checked'
-  ).length;
+  const checked = document.querySelectorAll('#habitList input[type="checkbox"]:checked').length;
   habitCount.textContent = checked;
 }
 

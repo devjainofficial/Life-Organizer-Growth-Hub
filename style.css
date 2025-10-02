@@ -1,246 +1,217 @@
+/* ====== THEME VARIABLES ====== */
+:root {
+  --bg: #f7f8fa;
+  --card-bg: #fff;
+  --accent: #6c63ff;
+  --accent-hover: #574fd6;
+  --text: #232946;
+  --subtle: #e8eaf6;
+  --shadow: 0 4px 24px rgba(44, 62, 80, 0.07);
+  --header-bg: #f3f4fa;
+  --footer-bg: #f1f1f1;
+}
+
+body.theme-blue {
+  --bg: #e3f0ff;
+  --card-bg: #fafdff;
+  --accent: #3a8dde;
+  --accent-hover: #256bb2;
+  --text: #1a2636;
+  --subtle: #d0e7ff;
+  --shadow: 0 4px 24px rgba(58, 141, 222, 0.08);
+  --header-bg: #d0e7ff;
+  --footer-bg: #cbe2fa;
+}
+
+body.theme-orange {
+  --bg: #fff5e6;
+  --card-bg: #fff8f1;
+  --accent: #ff914d;
+  --accent-hover: #e86c1a;
+  --text: #3d2c1e;
+  --subtle: #ffe0c2;
+  --shadow: 0 4px 24px rgba(255, 145, 77, 0.09);
+  --header-bg: #ffe0c2;
+  --footer-bg: #ffe7d1;
+}
+
+body.theme-dark {
+  --bg: #1e1e1e;
+  --card-bg: #2c2c2c;
+  --accent: #4caf50;
+  --accent-hover: #45a049;
+  --text: #ddd;
+  --subtle: #444;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --header-bg: #2c2c2c;
+  --footer-bg: #1a1a1a;
+}
+
+/* ====== BASE ====== */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #fdfdfd;
-  color: #333;
+  font-family: 'Inter', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   margin: 0;
   padding: 0;
+  transition: background 0.4s, color 0.4s;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #4caf50;
-  color: white;
-  padding: 1rem 2rem;
-  flex-wrap: wrap;
+/* ====== HEADER ====== */
+.main-header {
+  background: var(--header-bg);
   text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+  border-radius: 0 0 32px 32px;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+.main-header h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  letter-spacing: 1px;
+}
+.subtitle {
+  color: var(--accent);
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 400;
 }
 
-header h1 {
-  flex: 1 1 100%;
-  margin: 0.5rem 0;
+/* ====== THEME TOGGLE BUTTON ====== */
+.theme-toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.2rem 2rem 0.5rem;
 }
-
-main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  padding: 2rem;
-}
-
-section {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-button {
-  margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  background-color: #4caf50;
-  color: white;
+#themeToggle {
+  background: var(--card-bg);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+}
+#themeToggle:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent-hover);
+}
+#themeIcon {
+  font-size: 1.3rem;
 }
 
-button:hover {
-  background-color: #45a049;
+/* ====== MAIN CONTENT ====== */
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.welcome-card {
+  background: var(--subtle);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 2.5rem 3.5rem;
+  margin-bottom: 3.2rem;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 500;
+  max-width: 520px;
+  width: 100%;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem 2.2rem;
+  width: 100%;
+  max-width: 1000px;
 }
 
-ul {
+/* ====== FEATURE CARDS ====== */
+.feature-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 260px;
+  transition: box-shadow 0.3s, background 0.3s, transform 0.2s;
+}
+.feature-card:hover {
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.13);
+  transform: translateY(-4px) scale(1.015);
+}
+.feature-card h2 {
+  color: var(--accent);
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.feature-card input[type="text"] {
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid var(--subtle);
+  border-radius: 5px;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+  background: #fff;
+  color: var(--text);
+  transition: border 0.3s;
+}
+.feature-card input[type="text"]:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+.feature-card ul {
   list-style: none;
   padding: 0;
+  margin: 0.5rem 0 0;
 }
-
-li {
-  padding: 0.5rem;
-  border-bottom: 1px solid #eee;
+.feature-card li {
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px solid var(--subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: var(--text);
 }
-
 li.done {
   text-decoration: line-through;
   color: gray;
 }
 
-footer {
+/* ====== FOOTER ====== */
+.main-footer {
   text-align: center;
-  padding: 1rem;
-  background-color: #f1f1f1;
+  padding: 2.5rem 1rem 1.7rem;
+  background: var(--footer-bg);
+  color: var(--text);
+  border-radius: 32px 32px 0 0;
+  margin-top: 3.5rem;
+  font-size: 1.05rem;
+  box-shadow: var(--shadow);
+  border-top: 2.5px solid var(--subtle);
 }
 
-/* Dark mode */
-body.dark {
-  background-color: #1e1e1e;
-  color: #ddd;
-}
-
-body.dark section {
-  background-color: #2c2c2c;
-}
-
-/* ================== Skill Progress Styles ================== */
-.skill-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
-}
-
-.skill-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.skill-name {
-  font-weight: bold;
-  flex-grow: 1;
-  min-width: 120px;
-}
-
-.skill-level {
-  font-size: 0.9rem;
-  color: #666;
-  min-width: 80px;
-  text-align: center;
-}
-
-.skill-controls {
-  display: flex;
-  gap: 0.25rem;
-}
-
-.skill-btn {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.8rem;
-  min-width: 30px;
-  margin: 0;
-  background-color: #4caf50;
-  border-radius: 3px;
-}
-
-.skill-btn:hover {
-  background-color: #45a049;
-}
-
-.skill-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Progress bar */
-.progress-container {
-  width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
-  height: 20px;
-  position: relative;
-}
-
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #4caf50, #66bb6a);
-  transition: width 0.3s ease-in-out;
-  border-radius: 10px;
-  position: relative;
-}
-
-.progress-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 0.75rem;
-  font-weight: bold;
-  color: #333;
-  z-index: 1;
-}
-
-/* Dark theme adjustments */
-body.dark .skill-item {
-  border-bottom-color: #444;
-}
-
-body.dark .skill-level {
-  color: #bbb;
-}
-
-body.dark .progress-container {
-  background-color: #444;
-}
-
-body.dark .progress-text {
-  color: #fff;
-}
-
-body.dark .skill-btn:disabled {
-  background-color: #555;
-  color: #888;
-}
-
-/* ================== Habit Tracker ================== */
-#habits li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#habits input[type="checkbox"] {
-  margin-left: 10px;
-}
-
-/* ================== Responsive Design ================== */
+/* ====== Responsive Design ====== */
 @media (max-width: 768px) {
-  main {
-    grid-template-columns: 1fr;
-  }
-
-  header {
-    flex-direction: column;
-    text-align: center;
-  }
-
   .skill-header {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .skill-controls {
     align-self: flex-end;
-  }
-
-  .skill-name {
-    min-width: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .skill-header {
-    gap: 0.25rem;
-  }
-
-  .skill-btn {
-    padding: 0.2rem 0.4rem;
-    font-size: 0.75rem;
-    min-width: 25px;
-  }
-
-  .progress-container {
-    height: 18px;
-  }
-
-  .progress-text {
-    font-size: 0.7rem;
   }
 }
