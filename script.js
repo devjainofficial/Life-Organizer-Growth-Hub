@@ -4,7 +4,7 @@ themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
 });
 
-// Daily Planner with persistence
+// ================= TASK TRACKER =================
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
@@ -72,97 +72,96 @@ addTaskBtn.addEventListener("click", () => {
 
 loadTasks();
 
-// Learning Tracker with persistence
+// ================= SKILL TRACKER =================
 const skillInput = document.getElementById("skillInput");
 const addSkillBtn = document.getElementById("addSkillBtn");
 const skillList = document.getElementById("skillList");
 
-// Store skills in memory instead of localStorage
+// Skill data storage
 let skills = [];
+let skillIdCounter = 0;
 
-addSkillBtn.addEventListener('click', () => {
-    if (skillInput.value.trim() === '') return;
-    addSkill(skillInput.value, 0); // default progress 0%
-    skillInput.value = '';
-});
-
-function addSkill(name, progress) {
-    const li = document.createElement('li');
-    li.innerHTML = `
-        <span>${name}</span>
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width: ${progress}%"></div>
-          <span class="progress-text">${progress}%</span>
-        </div>
-        <button class="inc">+</button>
-        <button class="dec">-</button>
-    `;
-
-    li.querySelector('.inc').onclick = () => updateProgress(li, 10);
-    li.querySelector('.dec').onclick = () => updateProgress(li, -10);
-    skillList.appendChild(li);
-}
-
-function updateProgress(li, delta) {
-    let bar = li.querySelector('.progress-bar');
-    let text = li.querySelector('.progress-text');
-    let progress = parseInt(bar.style.width) || 0;
-    progress = Math.max(0, Math.min(100, progress + delta));
-    bar.style.width = progress + '%';
-    text.textContent = progress + '%';
-}
-
-// Motivational Quotes with categories
-function loadSkills() {
-  skillList.innerHTML = "";
-  skills.forEach((skill) => createSkillElement(skill));
-}
-
-function saveSkills() {
-  skills = [];
-  document.querySelectorAll("#skillList li span").forEach((span) => {
-    skills.push(span.textContent);
-  });
-}
-
-function createSkillElement(text) {
+function createSkillElement(skill) {
   const li = document.createElement("li");
-  const span = document.createElement("span");
-  span.textContent = text;
-
-  const editBtn = document.createElement("button");
-  editBtn.textContent = "✏️";
-  editBtn.addEventListener("click", () => {
-    const newText = prompt("Edit skill:", span.textContent);
-    if (newText) {
-      span.textContent = newText;
-      saveSkills();
-    }
-  });
-
-  const delBtn = document.createElement("button");
-  delBtn.textContent = "❌";
-  delBtn.addEventListener("click", () => {
-    li.remove();
-    saveSkills();
-  });
-
-  li.appendChild(span);
-  li.appendChild(editBtn);
-  li.appendChild(delBtn);
-  skillList.appendChild(li);
+  li.className = "skill-item";
+  li.innerHTML = `
+    <div class="skill-header">
+      <span class="skill-name">${skill.name}</span>
+      <span class="skill-level">Level ${skill.level}/10</span>
+      <div class="skill-controls">
+        <button class="skill-btn" onclick="decreaseSkill(${skill.id})" ${
+    skill.level <= 0 ? "disabled" : ""
+  }>-</button>
+        <button class="skill-btn" onclick="increaseSkill(${skill.id})" ${
+    skill.level >= 10 ? "disabled" : ""
+  }>+</button>
+        <button class="skill-btn" onclick="removeSkill(${
+          skill.id
+        })" style="background-color: #f44336;">×</button>
+      </div>
+    </div>
+    <div class="progress-container">
+      <div class="progress-bar" style="width: ${skill.level * 10}%"></div>
+      <span class="progress-text">${skill.level * 10}%</span>
+    </div>
+  `;
+  return li;
 }
 
-addSkillBtn.addEventListener("click", () => {
+function addSkill() {
   if (skillInput.value.trim() === "") return;
-  createSkillElement(skillInput.value);
-  saveSkills();
+
+  const skill = {
+    id: skillIdCounter++,
+    name: skillInput.value.trim(),
+    level: 0,
+  };
+
+  skills.push(skill);
+  const skillElement = createSkillElement(skill);
+  skillList.appendChild(skillElement);
   skillInput.value = "";
+}
+
+function increaseSkill(id) {
+  const skill = skills.find((s) => s.id === id);
+  if (skill && skill.level < 10) {
+    skill.level++;
+    updateSkillDisplay();
+  }
+}
+
+function decreaseSkill(id) {
+  const skill = skills.find((s) => s.id === id);
+  if (skill && skill.level > 0) {
+    skill.level--;
+    updateSkillDisplay();
+  }
+}
+
+function removeSkill(id) {
+  skills = skills.filter((s) => s.id !== id);
+  updateSkillDisplay();
+}
+
+function updateSkillDisplay() {
+  skillList.innerHTML = "";
+  skills.forEach((skill) => {
+    const skillElement = createSkillElement(skill);
+    skillList.appendChild(skillElement);
+  });
+}
+
+addSkillBtn.addEventListener("click", addSkill);
+
+// Allow Enter key to add skills
+skillInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addSkill();
+  }
 });
 
-loadSkills();
-
-// Habit Tracker
+// ================= HABIT TRACKER =================
 const habitInput = document.getElementById("habitInput");
 const addHabitBtn = document.getElementById("addHabitBtn");
 const habitList = document.getElementById("habitList");
@@ -227,55 +226,39 @@ addHabitBtn.addEventListener("click", () => {
 
 loadHabits();
 
-// Motivational Quotes
+// ================= QUOTES =================
 const quotes = [
   { text: "Your journey starts today.", category: "Motivation" },
   { text: "Small steps lead to big results.", category: "Motivation" },
   { text: "Consistency beats intensity.", category: "Motivation" },
   { text: "Every day is a new chance to grow.", category: "Life" },
   { text: "Every day is a chance to improve.", category: "Motivation" },
-  {
-    text: "Code is like humor. When you have to explain it, it's bad.",
-    category: "Tech",
-  },
-  {
-    text: "Debugging is like being the detective in a crime movie where you are also the murderer.",
-    category: "Tech",
-  },
+  { text: "Code is like humor. When you have to explain it, it’s bad.", category: "Tech" },
+  { text: "Debugging is like being the detective in a crime movie where you are also the murderer.", category: "Tech" },
   { text: "Learning never exhausts the mind.", category: "Life" },
-  {
-    text: "The best way to predict the future is to create it.",
-    category: "Motivation",
-  },
+  { text: "The best way to predict the future is to create it.", category: "Motivation" },
   { text: "Simplicity is the soul of efficiency.", category: "Tech" },
-  { text: "Don't wait for opportunity. Create it.", category: "Motivation" },
+  { text: "Don’t wait for opportunity. Create it.", category: "Motivation" },
   { text: "Mistakes are proof that you are trying.", category: "Life" },
-  {
-    text: "Great things never come from comfort zones.",
-    category: "Motivation",
-  },
-  {
-    text: "Success is the sum of small efforts repeated daily.",
-    category: "Motivation",
-  },
-  {
-    text: "Push yourself, because no one else will do it for you.",
-    category: "Motivation",
-  },
+  { text: "Great things never come from comfort zones.", category: "Motivation" },
+  { text: "Success is the sum of small efforts repeated daily.", category: "Motivation" },
+  { text: "Push yourself, because no one else will do it for you.", category: "Motivation" },
 ];
 
 const quoteDisplay = document.getElementById("quoteDisplay");
 const newQuoteBtn = document.getElementById("newQuoteBtn");
+
 newQuoteBtn.addEventListener("click", () => {
   const randomIndex = Math.floor(Math.random() * quotes.length);
   quoteDisplay.textContent = quotes[randomIndex].text;
 });
 
-// Pomodoro Timer with Tick Sound and Pause/Resume
+// ================= POMODORO TIMER =================
 let timer;
 let time = 25 * 60;
 let soundEnabled = true;
 let isPaused = true;
+
 const timerDisplay = document.getElementById("timerDisplay");
 const startTimerBtn = document.getElementById("startTimerBtn");
 const resetTimerBtn = document.getElementById("resetTimerBtn");
@@ -284,9 +267,7 @@ const soundToggleBtn = document.getElementById("soundToggleBtn");
 function updateTimer() {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
-  timerDisplay.textContent = `${minutes}:${
-    seconds < 10 ? "0" + seconds : seconds
-  }`;
+  timerDisplay.textContent = `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
 }
 
 function playTickSound() {
@@ -302,10 +283,7 @@ function playTickSound() {
   oscillator.type = "sine";
 
   gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(
-    0.01,
-    audioContext.currentTime + 0.05
-  );
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
 
   oscillator.start(audioContext.currentTime);
   oscillator.stop(audioContext.currentTime + 0.05);
@@ -323,10 +301,7 @@ function playCompletionSound() {
   oscillator.type = "sine";
 
   gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(
-    0.01,
-    audioContext.currentTime + 0.5
-  );
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
 
   oscillator.start(audioContext.currentTime);
   oscillator.stop(audioContext.currentTime + 0.5);
