@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Life Organizer & Growth Hub</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <header>
     <h1>Life Organizer & Growth Hub</h1>
     <button id="themeToggle">Switch Theme</button>
   </header>
-
   <main>
     <!-- Daily Planner -->
     <section id="planner">
@@ -22,7 +19,6 @@
       <button id="addTaskBtn">Add Task</button>
       <ul id="taskList"></ul>
     </section>
-
     <!-- Learning Tracker -->
     <section id="learning">
       <h2>Learning Tracker</h2>
@@ -30,8 +26,7 @@
       <button id="addSkillBtn">Add Skill</button>
       <ul id="skillList"></ul>
     </section>
-
-
+    <!-- Habit Tracker -->
     <section id="habits">
       <h2>Habit Tracker</h2>
       <input type="text" id="habitInput" placeholder="Add a new habit">
@@ -39,28 +34,24 @@
       <ul id="habitList"></ul>
       <p><strong>Completed Today:</strong> <span id="habitCount">0</span></p>
     </section>
-
     <!-- Motivational Quotes -->
     <section id="quotes">
       <h2>Motivational Quotes & Tips</h2>
-      <p id="quoteDisplay">“Your journey starts today.”</p>
+      <p id="quoteDisplay">"Your journey starts today."</p>
       <button id="newQuoteBtn">New Quote</button>
     </section>
-
     <!-- Pomodoro Timer -->
     <section id="timer">
       <h2>Focus Timer</h2>
       <p id="timerDisplay">25:00</p>
       <button id="startTimerBtn">Start</button>
       <button id="resetTimerBtn">Reset</button>
+      <button id="soundToggleBtn">🔊 Sound On</button>
     </section>
   </main>
-
   <footer>
     <p>Contribute to this project and help it grow!</p>
   </footer>
-
   <script src="script.js"></script>
 </body>
-
 </html>
