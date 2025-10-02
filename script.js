@@ -80,6 +80,39 @@ const skillList = document.getElementById("skillList");
 // Store skills in memory instead of localStorage
 let skills = [];
 
+addSkillBtn.addEventListener('click', () => {
+    if (skillInput.value.trim() === '') return;
+    addSkill(skillInput.value, 0); // default progress 0%
+    skillInput.value = '';
+});
+
+function addSkill(name, progress) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+        <span>${name}</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: ${progress}%"></div>
+          <span class="progress-text">${progress}%</span>
+        </div>
+        <button class="inc">+</button>
+        <button class="dec">-</button>
+    `;
+
+    li.querySelector('.inc').onclick = () => updateProgress(li, 10);
+    li.querySelector('.dec').onclick = () => updateProgress(li, -10);
+    skillList.appendChild(li);
+}
+
+function updateProgress(li, delta) {
+    let bar = li.querySelector('.progress-bar');
+    let text = li.querySelector('.progress-text');
+    let progress = parseInt(bar.style.width) || 0;
+    progress = Math.max(0, Math.min(100, progress + delta));
+    bar.style.width = progress + '%';
+    text.textContent = progress + '%';
+}
+
+// Motivational Quotes with categories
 function loadSkills() {
   skillList.innerHTML = "";
   skills.forEach((skill) => createSkillElement(skill));

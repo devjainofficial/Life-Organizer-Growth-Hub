@@ -84,6 +84,37 @@ body.dark section {
   background-color: #2c2c2c;
 }
 
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 60%;
+  margin: 0.25rem 0;
+}
+.progress-bar {
+  background-color: #4CAF50;
+  height: 16px;
+  border-radius: 8px;
+  transition: width 0.3s;
+  min-width: 20px;
+  width: 0%;
+  flex: 1;
+}
+.progress-text {
+  min-width: 32px;
+  font-size: 0.9em;
+}
+li button.inc, li button.dec {
+  margin-left: 0.5rem;
+  padding: 2px 8px;
+  font-size: 1em;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+=======
 /* Habit Tracker */
 #habits li {
   display: flex;
@@ -105,3 +136,4 @@ body.dark section {
     text-align: center;
   }
 }
+
