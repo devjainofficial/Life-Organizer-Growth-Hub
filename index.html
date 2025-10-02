@@ -8,22 +8,29 @@
 </head>
 <body>
 
+  <!-- Theme Toggle -->
   <div class="theme-toggle-container">
     <button id="themeToggle" aria-label="Switch Theme">
       <span id="themeIcon">🌗</span>
       <span id="themeLabel">Switch Theme</span>
     </button>
   </div>
+
+  <!-- Header -->
   <header class="main-header">
     <h1>Life Organizer & Growth Hub</h1>
     <p class="subtitle">Your personal space for clarity, growth, and balance</p>
   </header>
 
+  <!-- Main Content -->
   <main class="main-content">
+    <!-- Welcome -->
     <section class="welcome-card">
       <h2>Welcome!</h2>
       <p>Organize your life, set goals, and track your growth in a beautiful, calming space.</p>
     </section>
+
+    <!-- Feature Cards -->
     <div class="cards-grid">
       <!-- Daily Planner -->
       <section id="planner" class="feature-card">
@@ -32,6 +39,7 @@
         <button id="addTaskBtn">Add Task</button>
         <ul id="taskList"></ul>
       </section>
+
       <!-- Learning Tracker -->
       <section id="learning" class="feature-card">
         <h2>Learning Tracker</h2>
@@ -39,12 +47,23 @@
         <button id="addSkillBtn">Add Skill</button>
         <ul id="skillList"></ul>
       </section>
+
+      <!-- Habit Tracker -->
+      <section id="habits" class="feature-card">
+        <h2>Habit Tracker</h2>
+        <input type="text" id="habitInput" placeholder="Add a new habit">
+        <button id="addHabitBtn">Add Habit</button>
+        <ul id="habitList"></ul>
+        <p><strong>Completed Today:</strong> <span id="habitCount">0</span></p>
+      </section>
+
       <!-- Motivational Quotes -->
       <section id="quotes" class="feature-card">
         <h2>Motivational Quotes & Tips</h2>
         <p id="quoteDisplay">“Your journey starts today.”</p>
         <button id="newQuoteBtn">New Quote</button>
       </section>
+
       <!-- Pomodoro Timer -->
       <section id="timer" class="feature-card">
         <h2>Focus Timer</h2>
@@ -52,11 +71,13 @@
         <div class="timer-controls">
           <button id="startTimerBtn">Start</button>
           <button id="resetTimerBtn">Reset</button>
+          <button id="soundToggleBtn">🔊 Sound On</button>
         </div>
       </section>
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="main-footer">
     <p>Contribute to this project and help it grow!</p>
     <p>&copy; 2025 Life Organizer & Growth Hub</p>

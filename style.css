@@ -35,6 +35,19 @@ body.theme-orange {
   --footer-bg: #ffe7d1;
 }
 
+body.theme-dark {
+  --bg: #1e1e1e;
+  --card-bg: #2c2c2c;
+  --accent: #4caf50;
+  --accent-hover: #45a049;
+  --text: #ddd;
+  --subtle: #444;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --header-bg: #2c2c2c;
+  --footer-bg: #1a1a1a;
+}
+
+/* ====== BASE ====== */
 body {
   font-family: 'Inter', Arial, sans-serif;
   background: var(--bg);
@@ -48,7 +61,7 @@ body {
 .main-header {
   background: var(--header-bg);
   text-align: center;
-  padding: 2.5rem 1rem 1.5rem 1rem;
+  padding: 2.5rem 1rem 1.5rem;
   border-radius: 0 0 32px 32px;
   box-shadow: var(--shadow);
   margin-bottom: 2rem;
@@ -56,7 +69,7 @@ body {
 .main-header h1 {
   font-size: 2.5rem;
   font-weight: 600;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.5rem;
   letter-spacing: 1px;
 }
 .subtitle {
@@ -70,7 +83,7 @@ body {
 .theme-toggle-container {
   display: flex;
   justify-content: flex-end;
-  padding: 1.2rem 2rem 0.5rem 2rem;
+  padding: 1.2rem 2rem 0.5rem;
 }
 #themeToggle {
   background: var(--card-bg);
@@ -97,21 +110,19 @@ body {
 }
 
 /* ====== MAIN CONTENT ====== */
-/* ====== MAIN CONTENT ====== */
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem 3.5rem 1.5rem;
+  padding: 0 1.5rem 3.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .welcome-card {
   background: var(--subtle);
-  color: var(--text);
   border-radius: 22px;
   box-shadow: var(--shadow);
-  padding: 2.5rem 3.5rem 2.2rem 3.5rem;
+  padding: 2.5rem 3.5rem;
   margin-bottom: 3.2rem;
   text-align: center;
   font-size: 1.25rem;
@@ -126,82 +137,28 @@ body {
   width: 100%;
   max-width: 1000px;
 }
+
 /* ====== FEATURE CARDS ====== */
 .feature-card {
   background: var(--card-bg);
   border-radius: 18px;
   box-shadow: var(--shadow);
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   min-height: 260px;
   transition: box-shadow 0.3s, background 0.3s, transform 0.2s;
-  position: relative;
 }
 .feature-card:hover {
   box-shadow: 0 8px 32px rgba(44, 62, 80, 0.13);
   transform: translateY(-4px) scale(1.015);
 }
-
-/* ====== FOCUS TIMER CARD ====== */
-#timer.feature-card {
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-}
-#timer.feature-card h2 {
-  margin-bottom: 1.2rem;
-}
-#timerDisplay {
-  font-size: 2.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin: 0.7rem 0 1.2rem 0;
-  color: var(--accent);
-  background: var(--subtle);
-  border-radius: 12px;
-  padding: 0.7rem 2.2rem;
-  box-shadow: 0 2px 12px rgba(44, 62, 80, 0.07);
-  min-width: 150px;
-  text-align: center;
-  transition: background 0.3s, color 0.3s;
-}
-#timer.feature-card button {
-  margin: 0 0.5rem;
-  padding: 0.6rem 1.4rem;
-  font-size: 1.08rem;
-  font-weight: 600;
-  border-radius: 8px;
-  min-width: 90px;
-}
-#timer.feature-card .timer-controls {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 1.2rem;
-  margin-top: 0.5rem;
-}
 .feature-card h2 {
   color: var(--accent);
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
   font-size: 1.3rem;
   font-weight: 600;
-}
-.feature-card button {
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  margin-top: 0.7rem;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: background 0.3s;
-}
-.feature-card button:hover {
-  background: var(--accent-hover);
 }
 .feature-card input[type="text"] {
   padding: 0.5rem 0.8rem;
@@ -220,18 +177,25 @@ body {
 .feature-card ul {
   list-style: none;
   padding: 0;
-  margin: 0.5rem 0 0 0;
+  margin: 0.5rem 0 0;
 }
 .feature-card li {
   padding: 0.5rem 0.2rem;
   border-bottom: 1px solid var(--subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: var(--text);
+}
+li.done {
+  text-decoration: line-through;
+  color: gray;
 }
 
 /* ====== FOOTER ====== */
 .main-footer {
   text-align: center;
-  padding: 2.5rem 1rem 1.7rem 1rem;
+  padding: 2.5rem 1rem 1.7rem;
   background: var(--footer-bg);
   color: var(--text);
   border-radius: 32px 32px 0 0;
@@ -239,5 +203,15 @@ body {
   font-size: 1.05rem;
   box-shadow: var(--shadow);
   border-top: 2.5px solid var(--subtle);
-  letter-spacing: 0.01em;
+}
+
+/* ====== Responsive Design ====== */
+@media (max-width: 768px) {
+  .skill-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .skill-controls {
+    align-self: flex-end;
+  }
 }
