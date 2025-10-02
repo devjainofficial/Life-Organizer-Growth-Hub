@@ -96,17 +96,39 @@ addTaskBtn.addEventListener("click", () => {
 
 loadTasks();
 
-// ================= SKILL TRACKER =================
+// ================= SKILL TRACKER (Updated with Timestamps) =================
 const skillInput = document.getElementById("skillInput");
 const addSkillBtn = document.getElementById("addSkillBtn");
 const skillList = document.getElementById("skillList");
 
-let skills = [];
-let skillIdCounter = 0;
+let skills = JSON.parse(localStorage.getItem('skills')) || [];
+let skillIdCounter = skills.length > 0 ? Math.max(...skills.map(s => s.id)) + 1 : 0;
+
+// Function to format timestamp
+function formatTimestamp(date) {
+  const now = new Date();
+  const diffMs = now - date;
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  if (diffMins < 1) return 'Just now';
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 7) return `${diffDays}d ago`;
+  
+  return date.toLocaleDateString();
+}
 
 function createSkillElement(skill) {
   const li = document.createElement("li");
   li.className = "skill-item";
+  li.dataset.skillId = skill.id;
+  
+  const lastUpdated = new Date(skill.lastUpdated);
+  const timestampText = formatTimestamp(lastUpdated);
+  
   li.innerHTML = `
     <div class="skill-header">
       <span class="skill-name">${skill.name}</span>
@@ -121,6 +143,10 @@ function createSkillElement(skill) {
       <div class="progress-bar" style="width: ${skill.level * 10}%"></div>
       <span class="progress-text">${skill.level * 10}%</span>
     </div>
+    <div class="skill-timestamp">
+      <span class="timestamp-icon">🕒</span>
+      <span class="timestamp-text">Updated ${timestampText}</span>
+    </div>
   `;
   return li;
 }
@@ -132,11 +158,13 @@ function addSkill() {
     id: skillIdCounter++,
     name: skillInput.value.trim(),
     level: 0,
+    created: new Date().toISOString(),
+    lastUpdated: new Date().toISOString()
   };
 
   skills.push(skill);
-  const skillElement = createSkillElement(skill);
-  skillList.appendChild(skillElement);
+  saveSkills();
+  updateSkillDisplay();
   skillInput.value = "";
 }
 
@@ -144,7 +172,18 @@ function increaseSkill(id) {
   const skill = skills.find((s) => s.id === id);
   if (skill && skill.level < 10) {
     skill.level++;
+    skill.lastUpdated = new Date().toISOString();
+    saveSkills();
     updateSkillDisplay();
+    
+    // Add highlight animation
+    const skillElement = document.querySelector(`.skill-item[data-skill-id="${id}"]`);
+    if (skillElement) {
+      skillElement.classList.add('highlight');
+      setTimeout(() => {
+        skillElement.classList.remove('highlight');
+      }, 2000);
+    }
   }
 }
 
@@ -152,22 +191,57 @@ function decreaseSkill(id) {
   const skill = skills.find((s) => s.id === id);
   if (skill && skill.level > 0) {
     skill.level--;
+    skill.lastUpdated = new Date().toISOString();
+    saveSkills();
     updateSkillDisplay();
+    
+    // Add highlight animation
+    const skillElement = document.querySelector(`.skill-item[data-skill-id="${id}"]`);
+    if (skillElement) {
+      skillElement.classList.add('highlight');
+      setTimeout(() => {
+        skillElement.classList.remove('highlight');
+      }, 2000);
+    }
   }
 }
 
 function removeSkill(id) {
   skills = skills.filter((s) => s.id !== id);
+  saveSkills();
   updateSkillDisplay();
+}
+
+function saveSkills() {
+  localStorage.setItem('skills', JSON.stringify(skills));
 }
 
 function updateSkillDisplay() {
   skillList.innerHTML = "";
-  skills.forEach((skill) => {
+  
+  // Sort skills by last updated (newest first)
+  const sortedSkills = [...skills].sort((a, b) => 
+    new Date(b.lastUpdated) - new Date(a.lastUpdated)
+  );
+  
+  sortedSkills.forEach((skill) => {
     const skillElement = createSkillElement(skill);
     skillList.appendChild(skillElement);
   });
 }
+
+// Update timestamp display every minute
+setInterval(() => {
+  document.querySelectorAll('.skill-item').forEach(item => {
+    const skillId = parseInt(item.dataset.skillId);
+    const skill = skills.find(s => s.id === skillId);
+    if (skill) {
+      const timestampElement = item.querySelector('.timestamp-text');
+      const lastUpdated = new Date(skill.lastUpdated);
+      timestampElement.textContent = `Updated ${formatTimestamp(lastUpdated)}`;
+    }
+  });
+}, 60000); // Update every minute
 
 addSkillBtn.addEventListener("click", addSkill);
 
@@ -176,6 +250,9 @@ skillInput.addEventListener("keypress", (e) => {
     addSkill();
   }
 });
+
+// Initialize skills display on load
+updateSkillDisplay();
 
 // ================= HABIT TRACKER =================
 const habitInput = document.getElementById("habitInput");
@@ -246,12 +323,12 @@ const quotes = [
   { text: "Consistency beats intensity.", category: "Motivation" },
   { text: "Every day is a new chance to grow.", category: "Life" },
   { text: "Every day is a chance to improve.", category: "Motivation" },
-  { text: "Code is like humor. When you have to explain it, it’s bad.", category: "Tech" },
+  { text: "Code is like humor. When you have to explain it, it's bad.", category: "Tech" },
   { text: "Debugging is like being the detective in a crime movie where you are also the murderer.", category: "Tech" },
   { text: "Learning never exhausts the mind.", category: "Life" },
   { text: "The best way to predict the future is to create it.", category: "Motivation" },
   { text: "Simplicity is the soul of efficiency.", category: "Tech" },
-  { text: "Don’t wait for opportunity. Create it.", category: "Motivation" },
+  { text: "Don't wait for opportunity. Create it.", category: "Motivation" },
   { text: "Mistakes are proof that you are trying.", category: "Life" },
   { text: "Great things never come from comfort zones.", category: "Motivation" },
   { text: "Success is the sum of small efforts repeated daily.", category: "Motivation" },
