@@ -1,4 +1,4 @@
-// ====== Multi-Theme Toggle ======
+// ====== Multi-Theme Toggle (Omitted for brevity, no changes) ======
 const themes = [
   { name: 'default', class: '', icon: '🌗', label: 'Default' },
   { name: 'blue', class: 'theme-blue', icon: '🌊', label: 'Calming Blue' },
@@ -29,7 +29,7 @@ if (!isNaN(savedIdx) && savedIdx >= 0 && savedIdx < themes.length) {
 }
 applyTheme(currentTheme);
 
-// ================= TASK TRACKER =================
+// ================= TASK TRACKER (Omitted for brevity, no changes) =================
 const taskInput = document.getElementById("taskInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
@@ -96,7 +96,7 @@ addTaskBtn.addEventListener("click", () => {
 
 loadTasks();
 
-// ================= SKILL TRACKER =================
+// ================= SKILL TRACKER (Omitted for brevity, no changes) =================
 const skillInput = document.getElementById("skillInput");
 const addSkillBtn = document.getElementById("addSkillBtn");
 const skillList = document.getElementById("skillList");
@@ -177,7 +177,7 @@ skillInput.addEventListener("keypress", (e) => {
   }
 });
 
-// ================= HABIT TRACKER =================
+// ================= HABIT TRACKER (Omitted for brevity, no changes) =================
 const habitInput = document.getElementById("habitInput");
 const addHabitBtn = document.getElementById("addHabitBtn");
 const habitList = document.getElementById("habitList");
@@ -239,7 +239,7 @@ addHabitBtn.addEventListener("click", () => {
 
 loadHabits();
 
-// ================= QUOTES =================
+// ================= QUOTES (Omitted for brevity, no changes) =================
 const quotes = [
   { text: "Your journey starts today.", category: "Motivation" },
   { text: "Small steps lead to big results.", category: "Motivation" },
@@ -266,21 +266,41 @@ newQuoteBtn.addEventListener("click", () => {
   quoteDisplay.textContent = quotes[randomIndex].text;
 });
 
-// ================= POMODORO TIMER =================
+// ================= POMODORO TIMER (FIXED LOGIC AND IDS) =================
 let timer;
-let time = 25 * 60;
+let time = 25 * 60; // Current time left in seconds
+let defaultTime = 25 * 60; // Time to reset to (last set time)
 let soundEnabled = true;
 let isPaused = true;
 
 const timerDisplay = document.getElementById("timerDisplay");
-const startTimerBtn = document.getElementById("startTimerBtn");
+const startPauseBtn = document.getElementById("startPauseBtn"); // Combined Start/Resume
+const pauseTimerBtn = document.getElementById("pauseTimerBtn"); // Separate Pause button (optional, but in image)
 const resetTimerBtn = document.getElementById("resetTimerBtn");
 const soundToggleBtn = document.getElementById("soundToggleBtn");
+const customMinutesInput = document.getElementById("customMinutes"); // CORRECTED ID
+const setTimeBtn = document.getElementById("setTimeBtn"); // CORRECTED ID
+
+// Get progress circle elements
+const progressCircle = document.querySelector('.progress-ring__circle');
+const radius = progressCircle.r.baseVal.value;
+const circumference = radius * 2 * Math.PI;
+progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+
+function setProgress(percent) {
+    // Calculates the offset needed to show 'percent' of the circle filled
+    const offset = circumference - percent / 100 * circumference;
+    progressCircle.style.strokeDashoffset = offset;
+}
 
 function updateTimer() {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   timerDisplay.textContent = `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+
+  // Update Progress Circle: Calculate progress based on total set time
+  const percentCompleted = 100 - (time / defaultTime) * 100;
+  setProgress(percentCompleted);
 }
 
 function playTickSound() {
@@ -303,6 +323,7 @@ function playTickSound() {
 }
 
 function playCompletionSound() {
+  if (!soundEnabled) return;
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   const oscillator = audioContext.createOscillator();
   const gainNode = audioContext.createGain();
@@ -329,40 +350,69 @@ soundToggleBtn.addEventListener("click", () => {
   updateSoundButtonText();
 });
 
-startTimerBtn.addEventListener("click", () => {
+// Start Timer
+startPauseBtn.addEventListener("click", () => {
   if (isPaused) {
     isPaused = false;
-    startTimerBtn.textContent = "Pause";
+    startPauseBtn.textContent = "Start"; // It will say 'Start' only when paused
+    
+    // Clear any existing interval before starting a new one
+    if (timer) clearInterval(timer); 
+
     timer = setInterval(() => {
       if (time <= 0) {
         clearInterval(timer);
         timer = null;
-        time = 25 * 60;
         playCompletionSound();
-        alert("Time is up!");
-        updateTimer();
+        alert("⏰ Time is up!");
         isPaused = true;
-        startTimerBtn.textContent = "Start";
+        startPauseBtn.textContent = "Start";
+        time = defaultTime; // Reset to the last set time
+        updateTimer();
         return;
       }
       time--;
-      playTickSound();
+      // playTickSound(); 
       updateTimer();
     }, 1000);
-  } else {
-    clearInterval(timer);
-    isPaused = true;
-    startTimerBtn.textContent = "Resume";
-  }
+  } 
 });
 
+// Pause Timer
+pauseTimerBtn.addEventListener("click", () => {
+    if (!isPaused) {
+        clearInterval(timer);
+        isPaused = true;
+        startPauseBtn.textContent = "Resume";
+    }
+});
+
+
+// Reset Timer
 resetTimerBtn.addEventListener("click", () => {
   clearInterval(timer);
   timer = null;
-  time = 25 * 60;
+  time = defaultTime; // Reset to the last set time (25:00 or custom)
   updateTimer();
   isPaused = true;
-  startTimerBtn.textContent = "Start";
+  startPauseBtn.textContent = "Start";
+});
+
+// Set Custom Time - **FIXED**
+setTimeBtn.addEventListener("click", () => {
+  const minutes = parseInt(customMinutesInput.value, 10);
+  if (!isNaN(minutes) && minutes > 0 && minutes <= 120) {
+    clearInterval(timer);
+    timer = null;
+    time = minutes * 60;
+    defaultTime = time; // Store the new time as the default for reset
+    updateTimer();
+    isPaused = true;
+    startPauseBtn.textContent = "Start";
+    customMinutesInput.value = ''; // Clear the input after setting
+  } else {
+    alert("⚠️ Please enter a valid number of minutes (1-120)!");
+  }
 });
 
 updateTimer();
