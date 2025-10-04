@@ -2,7 +2,9 @@
 const themes = [
   { name: 'default', class: '', icon: '🌗', label: 'Default' },
   { name: 'blue', class: 'theme-blue', icon: '🌊', label: 'Calming Blue' },
-  { name: 'orange', class: 'theme-orange', icon: '🌅', label: 'Sunset Orange' }
+  { name: 'orange', class: 'theme-orange', icon: '🌅', label: 'Sunset Orange' },
+  { name: 'dark', class: 'theme-dark', icon: '🌙', label: 'Deep Dark' } // New Dark Theme
+
 ];
 let currentTheme = 0;
 
@@ -104,78 +106,101 @@ const skillList = document.getElementById("skillList");
 let skills = [];
 let skillIdCounter = 0;
 
+function saveSkills() {
+    localStorage.setItem("skills", JSON.stringify(skills));
+}
+
+function loadSkills() {
+    const savedSkills = JSON.parse(localStorage.getItem("skills"));
+    if (savedSkills) {
+        skills = savedSkills;
+        // Find the maximum ID to continue the counter
+        const maxId = skills.reduce((max, skill) => Math.max(max, skill.id), 0);
+        skillIdCounter = maxId + 1;
+    }
+    updateSkillDisplay();
+}
+
 function createSkillElement(skill) {
-  const li = document.createElement("li");
-  li.className = "skill-item";
-  li.innerHTML = `
-    <div class="skill-header">
-      <span class="skill-name">${skill.name}</span>
-      <span class="skill-level">Level ${skill.level}/10</span>
-      <div class="skill-controls">
-        <button class="skill-btn" onclick="decreaseSkill(${skill.id})" ${skill.level <= 0 ? "disabled" : ""}>-</button>
-        <button class="skill-btn" onclick="increaseSkill(${skill.id})" ${skill.level >= 10 ? "disabled" : ""}>+</button>
-        <button class="skill-btn" onclick="removeSkill(${skill.id})" style="background-color: #f44336;">×</button>
+  // ... existing createSkillElement function ...
+  // (No change needed inside this function, as it uses the 'skill' object)
+    const li = document.createElement("li");
+    li.className = "skill-item";
+    li.innerHTML = `
+      <div class="skill-header">
+        <span class="skill-name">${skill.name}</span>
+        <span class="skill-level">Level ${skill.level}/10</span>
+        <div class="skill-controls">
+          <button class="skill-btn" onclick="decreaseSkill(${skill.id})" ${skill.level <= 0 ? "disabled" : ""}>-</button>
+          <button class="skill-btn" onclick="increaseSkill(${skill.id})" ${skill.level >= 10 ? "disabled" : ""}>+</button>
+          <button class="skill-btn" onclick="removeSkill(${skill.id})" style="background-color: #f44336;">×</button>
+        </div>
       </div>
-    </div>
-    <div class="progress-container">
-      <div class="progress-bar" style="width: ${skill.level * 10}%"></div>
-      <span class="progress-text">${skill.level * 10}%</span>
-    </div>
-  `;
-  return li;
+      <div class="progress-container">
+        <div class="progress-bar" style="width: ${skill.level * 10}%"></div>
+        <span class="progress-text">${skill.level * 10}%</span>
+      </div>
+    `;
+    return li;
 }
 
 function addSkill() {
-  if (skillInput.value.trim() === "") return;
+    if (skillInput.value.trim() === "") return;
 
-  const skill = {
-    id: skillIdCounter++,
-    name: skillInput.value.trim(),
-    level: 0,
-  };
+    const skill = {
+        id: skillIdCounter++,
+        name: skillInput.value.trim(),
+        level: 0,
+    };
 
-  skills.push(skill);
-  const skillElement = createSkillElement(skill);
-  skillList.appendChild(skillElement);
-  skillInput.value = "";
+    skills.push(skill);
+    updateSkillDisplay(); // Call update display instead of appending directly
+    skillInput.value = "";
+    skillInput.focus(); // Good UX: keep focus for quick entry
 }
 
 function increaseSkill(id) {
-  const skill = skills.find((s) => s.id === id);
-  if (skill && skill.level < 10) {
-    skill.level++;
-    updateSkillDisplay();
-  }
+    const skill = skills.find((s) => s.id === id);
+    if (skill && skill.level < 10) {
+        skill.level++;
+        updateSkillDisplay();
+        saveSkills(); // SAVE
+    }
 }
 
 function decreaseSkill(id) {
-  const skill = skills.find((s) => s.id === id);
-  if (skill && skill.level > 0) {
-    skill.level--;
-    updateSkillDisplay();
-  }
+    const skill = skills.find((s) => s.id === id);
+    if (skill && skill.level > 0) {
+        skill.level--;
+        updateSkillDisplay();
+        saveSkills(); // SAVE
+    }
 }
 
 function removeSkill(id) {
-  skills = skills.filter((s) => s.id !== id);
-  updateSkillDisplay();
+    skills = skills.filter((s) => s.id !== id);
+    updateSkillDisplay();
+    saveSkills(); // SAVE
 }
 
 function updateSkillDisplay() {
-  skillList.innerHTML = "";
-  skills.forEach((skill) => {
-    const skillElement = createSkillElement(skill);
-    skillList.appendChild(skillElement);
-  });
+    skillList.innerHTML = "";
+    skills.forEach((skill) => {
+        const skillElement = createSkillElement(skill);
+        skillList.appendChild(skillElement);
+    });
 }
 
 addSkillBtn.addEventListener("click", addSkill);
 
 skillInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    addSkill();
-  }
+    if (e.key === "Enter") {
+        addSkill();
+    }
 });
+
+// Load skills on page initialization
+loadSkills();
 
 // ================= HABIT TRACKER =================
 const habitInput = document.getElementById("habitInput");
@@ -186,21 +211,53 @@ const habitCount = document.getElementById("habitCount");
 let habits = [];
 
 function loadHabits() {
-  habitList.innerHTML = "";
-  habits.forEach((habit) => createHabitElement(habit.text, habit.done));
-  updateHabitCount();
+    const savedHabits = JSON.parse(localStorage.getItem('habits')); // NEW: Load from storage
+    if (savedHabits) {
+        habits = savedHabits;
+    }
+    habitList.innerHTML = "";
+    habits.forEach((habit) => createHabitElement(habit.text, habit.done));
+    updateHabitCount();
+}
+function loadTasks() {
+    const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (savedTasks) {
+        tasks = savedTasks;
+    }
+
+    taskList.innerHTML = "";
+    tasks.forEach((task, index) => {
+        createTaskElement(task.text, task.done, index);
+    });
 }
 
-function saveHabits() {
-  habits = [];
-  document.querySelectorAll("#habitList li").forEach((li) => {
-    habits.push({
-      text: li.querySelector("span").textContent,
-      done: li.querySelector('input[type="checkbox"]').checked,
+function saveTasks() {
+    tasks = [];
+    document.querySelectorAll("#taskList li").forEach((li) => {
+        tasks.push({
+            text: li.querySelector("span").textContent,
+            done: li.classList.contains("done"),
+        });
     });
-  });
-  updateHabitCount();
+    localStorage.setItem('tasks', JSON.stringify(tasks)); // NEW: Save to storage
 }
+// ... rest of the TASK TRACKER code ...
+
+// Change the initial call to load tasks
+loadTasks();
+function saveHabits() {
+    habits = [];
+    document.querySelectorAll("#habitList li").forEach((li) => {
+        habits.push({
+            text: li.querySelector("span").textContent,
+            done: li.querySelector('input[type="checkbox"]').checked,
+        });
+    });
+    localStorage.setItem('habits', JSON.stringify(habits)); // NEW: Save to storage
+    updateHabitCount();
+}
+
+
 
 function updateHabitCount() {
   const checked = document.querySelectorAll('#habitList input[type="checkbox"]:checked').length;
@@ -367,3 +424,24 @@ resetTimerBtn.addEventListener("click", () => {
 
 updateTimer();
 updateSoundButtonText();
+
+// ================= SCROLL TO TOP =================
+const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+// Show/Hide the button based on scroll position
+window.addEventListener("scroll", () => {
+    // Show button if user has scrolled down more than 300px
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollToTopBtn.style.display = "block";
+    } else {
+        scrollToTopBtn.style.display = "none";
+    }
+});
+
+// Scroll to the top when the button is clicked
+scrollToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth" // Smooth scrolling for better user experience
+    });
+});
