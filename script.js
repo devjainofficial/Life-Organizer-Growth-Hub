@@ -178,6 +178,9 @@ skillInput.addEventListener("keypress", (e) => {
 });
 
 // ================= HABIT TRACKER =================
+// ...existing code...
+
+// ================= HABIT TRACKER =================
 const habitInput = document.getElementById("habitInput");
 const addHabitBtn = document.getElementById("addHabitBtn");
 const habitList = document.getElementById("habitList");
@@ -185,29 +188,57 @@ const habitCount = document.getElementById("habitCount");
 
 let habits = [];
 
+// Helper function to get today's date string
+function getTodayString() {
+  return new Date().toISOString().split('T')[0]; // Returns YYYY-MM-DD format
+}
+
+// Load habits from localStorage
 function loadHabits() {
+  const storedHabits = localStorage.getItem('habits');
+  const lastUpdated = localStorage.getItem('habitsLastUpdated');
+  const today = getTodayString();
+  
+  if (storedHabits) {
+    habits = JSON.parse(storedHabits);
+    
+    // If it's a new day, reset all checkboxes but keep the habits
+    if (lastUpdated !== today) {
+      habits.forEach(habit => {
+        habit.done = false;
+      });
+      localStorage.setItem('habitsLastUpdated', today);
+      saveHabitsToStorage();
+    }
+  } else {
+    habits = [];
+    localStorage.setItem('habitsLastUpdated', today);
+  }
+  
+  renderHabits();
+}
+
+// Save habits to localStorage
+function saveHabitsToStorage() {
+  localStorage.setItem('habits', JSON.stringify(habits));
+  localStorage.setItem('habitsLastUpdated', getTodayString());
+}
+
+// Render habits in the UI
+function renderHabits() {
   habitList.innerHTML = "";
-  habits.forEach((habit) => createHabitElement(habit.text, habit.done));
+  habits.forEach((habit, index) => createHabitElement(habit.text, habit.done, index));
   updateHabitCount();
 }
 
-function saveHabits() {
-  habits = [];
-  document.querySelectorAll("#habitList li").forEach((li) => {
-    habits.push({
-      text: li.querySelector("span").textContent,
-      done: li.querySelector('input[type="checkbox"]').checked,
-    });
-  });
-  updateHabitCount();
-}
-
+// Update the habit count display
 function updateHabitCount() {
-  const checked = document.querySelectorAll('#habitList input[type="checkbox"]:checked').length;
-  habitCount.textContent = checked;
+  const checkedCount = habits.filter(habit => habit.done).length;
+  habitCount.textContent = checkedCount;
 }
 
-function createHabitElement(text, done = false) {
+// Create a habit element
+function createHabitElement(text, done = false, index) {
   const li = document.createElement("li");
   const span = document.createElement("span");
   span.textContent = text;
@@ -215,13 +246,18 @@ function createHabitElement(text, done = false) {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = done;
-  checkbox.addEventListener("change", saveHabits);
+  checkbox.addEventListener("change", () => {
+    habits[index].done = checkbox.checked;
+    saveHabitsToStorage();
+    updateHabitCount();
+  });
 
   const delBtn = document.createElement("button");
   delBtn.textContent = "❌";
   delBtn.addEventListener("click", () => {
-    li.remove();
-    saveHabits();
+    habits.splice(index, 1);
+    saveHabitsToStorage();
+    renderHabits();
   });
 
   li.appendChild(span);
@@ -230,15 +266,32 @@ function createHabitElement(text, done = false) {
   habitList.appendChild(li);
 }
 
+// Add new habit
 addHabitBtn.addEventListener("click", () => {
   if (habitInput.value.trim() === "") return;
-  createHabitElement(habitInput.value);
-  saveHabits();
+  
+  const newHabit = {
+    text: habitInput.value.trim(),
+    done: false
+  };
+  
+  habits.push(newHabit);
+  saveHabitsToStorage();
+  renderHabits();
   habitInput.value = "";
 });
 
+// Allow Enter key to add habits
+habitInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addHabitBtn.click();
+  }
+});
+
+// Initialize habits on page load
 loadHabits();
 
+// ...existing code...
 // ================= QUOTES =================
 const quotes = [
   { text: "Your journey starts today.", category: "Motivation" },
