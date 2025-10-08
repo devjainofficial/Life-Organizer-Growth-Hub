@@ -1,54 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Life Organizer & Growth Hub</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Life Organizer & Growth Hub</h1>
-    <button id="themeToggle">Switch Theme</button>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life Organizer & Growth Hub</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Life Organizer & Growth Hub</h1>
+      <button id="themeToggle">Switch Theme</button>
+    </header>
 
-  <main>
-    <!-- Daily Planner -->
-    <section id="planner">
-      <h2>Daily Planner</h2>
-      <input type="text" id="taskInput" placeholder="Add a new task">
-      <button id="addTaskBtn">Add Task</button>
-      <ul id="taskList"></ul>
-    </section>
+    <main>
+      <!-- Daily Planner -->
+      <section id="planner">
+        <h2>Daily Planner</h2>
+        <input type="text" id="taskInput" placeholder="Add a new task" />
+        <button id="addTaskBtn">Add Task</button>
+        <ul id="taskList"></ul>
+      </section>
 
-    <!-- Learning Tracker -->
-    <section id="learning">
-      <h2>Learning Tracker</h2>
-      <input type="text" id="skillInput" placeholder="Add a new skill">
-      <button id="addSkillBtn">Add Skill</button>
-      <ul id="skillList"></ul>
-    </section>
+      <!-- Learning Tracker -->
+      <section id="learning">
+        <h2>Learning Tracker</h2>
+        <input type="text" id="skillInput" placeholder="Add a new skill" />
+        <button id="addSkillBtn">Add Skill</button>
+        <ul id="skillList"></ul>
+      </section>
 
-    <!-- Motivational Quotes -->
-    <section id="quotes">
-      <h2>Motivational Quotes & Tips</h2>
-      <p id="quoteDisplay">“Your journey starts today.”</p>
-      <button id="newQuoteBtn">New Quote</button>
-    </section>
+      <!-- Motivational Quotes -->
+      <section id="quotes">
+        <h2>Motivational Quotes & Tips</h2>
+        <p id="quoteDisplay">“Your journey starts today.”</p>
+        <button id="newQuoteBtn">New Quote</button>
+      </section>
 
-    <!-- Pomodoro Timer -->
-    <section id="timer">
-      <h2>Focus Timer</h2>
-      <p id="timerDisplay">25:00</p>
-      <button id="startTimerBtn">Start</button>
-      <button id="resetTimerBtn">Reset</button>
-    </section>
-  </main>
+      <!-- Pomodoro Timer -->
+      <section id="timer">
+        <h2>Focus Timer</h2>
 
-  <footer>
-    <p>Contribute to this project and help it grow!</p>
-  </footer>
+        <!-- Timer Configuration -->
+        <div class="timer-config">
+          <div class="config-group">
+            <label for="taskNameInput">Task Name (Optional):</label>
+            <input
+              type="text"
+              id="taskNameInput"
+              placeholder="What are you focusing on?"
+            />
+          </div>
+          <div class="config-group">
+            <label for="durationInput">Duration (minutes):</label>
+            <input
+              type="number"
+              id="durationInput"
+              min="1"
+              max="120"
+              value="25"
+            />
+          </div>
+        </div>
 
-  <script src="script.js"></script>
-</body>
+        <!-- Timer Display -->
+        <div class="timer-container">
+          <svg class="progress-ring" width="200" height="200">
+            <circle
+              class="progress-ring-circle-bg"
+              stroke="#e0e0e0"
+              stroke-width="8"
+              fill="transparent"
+              r="90"
+              cx="100"
+              cy="100"
+            />
+            <circle
+              class="progress-ring-circle"
+              stroke="#4CAF50"
+              stroke-width="8"
+              fill="transparent"
+              r="90"
+              cx="100"
+              cy="100"
+            />
+          </svg>
+          <div class="timer-content">
+            <div id="taskNameDisplay" class="task-name-display"></div>
+            <div id="timerDisplay" class="timer-display">25:00</div>
+            <div id="timerStatus" class="timer-status">Ready to focus</div>
+          </div>
+        </div>
+
+        <!-- Timer Controls -->
+        <div class="timer-controls">
+          <button id="startTimerBtn" class="timer-btn start-btn">
+            <span class="btn-icon">▶</span> Start
+          </button>
+          <button id="pauseTimerBtn" class="timer-btn pause-btn" disabled>
+            <span class="btn-icon">⏸</span> Pause
+          </button>
+          <button id="resetTimerBtn" class="timer-btn reset-btn">
+            <span class="btn-icon">↻</span> Reset
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Contribute to this project and help it grow!</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>

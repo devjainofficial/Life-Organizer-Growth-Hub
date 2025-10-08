@@ -11,7 +11,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   padding: 1rem 2rem;
 }
@@ -27,7 +27,7 @@ section {
   background-color: #fff;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Buttons */
@@ -36,7 +36,7 @@ button {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   cursor: pointer;
 }
@@ -71,4 +71,281 @@ body.dark {
 
 body.dark section {
   background-color: #2c2c2c;
+}
+
+body.dark .progress-ring-circle-bg {
+  stroke: #444;
+}
+
+body.dark input {
+  background-color: #333;
+  color: #ddd;
+  border-color: #555;
+}
+
+body.dark input:focus {
+  border-color: #4caf50;
+}
+
+/* Enhanced Focus Timer Styles */
+#timer {
+  text-align: center;
+}
+
+.timer-config {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.config-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 200px;
+}
+
+.config-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+body.dark .config-group label {
+  color: #aaa;
+}
+
+.config-group input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.config-group input:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.config-group input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+body.dark .config-group input:disabled {
+  background-color: #2a2a2a;
+}
+
+.timer-container {
+  position: relative;
+  display: inline-block;
+  margin: 2rem 0;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.5s ease, stroke 0.3s ease;
+  stroke-linecap: round;
+}
+
+body.dark .progress-ring-circle {
+  stroke: #66bb6a;
+}
+
+.timer-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.task-name-display {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 0.5rem;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: none;
+}
+
+body.dark .task-name-display {
+  color: #aaa;
+}
+
+.timer-display {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 2px;
+}
+
+body.dark .timer-display {
+  color: #fff;
+}
+
+.timer-display.timer-complete {
+  animation: pulse 1s ease-in-out infinite;
+  color: #4caf50;
+}
+
+.timer-status {
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+  color: #888;
+  font-weight: 500;
+}
+
+body.dark .timer-status {
+  color: #999;
+}
+
+.timer-status.status-complete {
+  color: #4caf50;
+  font-weight: 600;
+  animation: bounce 0.5s ease;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.timer-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.timer-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+}
+
+.start-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+}
+
+.pause-btn {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+}
+
+.pause-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
+}
+
+.reset-btn {
+  background: linear-gradient(135deg, #757575 0%, #616161 100%);
+  color: white;
+}
+
+.reset-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #616161 0%, #424242 100%);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+/* Timer Flash Animation */
+@keyframes timer-flash {
+  0%,
+  100% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: rgba(76, 175, 80, 0.1);
+  }
+}
+
+.timer-flash {
+  animation: timer-flash 0.5s ease-in-out 3;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  #timer {
+    grid-column: span 1;
+  }
+
+  .timer-config {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .config-group {
+    min-width: unset;
+  }
+
+  .timer-display {
+    font-size: 2rem;
+  }
 }
