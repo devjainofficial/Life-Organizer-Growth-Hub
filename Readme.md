@@ -45,21 +45,25 @@ Built with pure HTML, CSS, and JavaScript - no frameworks, no dependencies, just
 ## ✨ Features
 
 ### 📝 Daily Planner
+
 - Add and manage your daily tasks
 - Simple, intuitive task list interface
 - Quick task entry with keyboard support
 
 ### 📚 Learning Tracker
+
 - Track skills you're learning
 - Build your personal learning roadmap
 - Monitor your growth journey
 
 ### 💬 Motivational Quotes & Tips
+
 - Get inspired with curated motivational quotes
 - Categories include Motivation, Life, and Tech
 - One-click refresh for new inspiration
 
 ### ⏰ Enhanced Focus Timer
+
 - **Custom duration**: Set any focus time (1-120 minutes)
 - **Visual progress**: Beautiful circular progress indicator
 - **Task naming**: Label what you're working on
@@ -68,6 +72,7 @@ Built with pure HTML, CSS, and JavaScript - no frameworks, no dependencies, just
 - **Smart controls**: Intuitive start, pause, and reset buttons
 
 ### 🌓 Theme Toggle
+
 - Switch between light and dark modes
 - Smooth transitions
 - Preference persists across sessions
@@ -83,11 +88,13 @@ All you need is a modern web browser! No installation or setup required.
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/OmMaheshwari653/Life-Organizer-Growth-Hub.git
    ```
 
 2. **Navigate to the project directory**
+
    ```bash
    cd Life-Organizer-Growth-Hub
    ```
@@ -107,16 +114,19 @@ That's it! 🎉
 ## 📖 Usage
 
 ### Daily Planning
+
 1. Type your task in the "Add a new task" input field
 2. Click "Add Task" or press Enter
 3. Tasks appear in your list instantly
 
 ### Learning Tracking
+
 1. Enter the skill you're learning
 2. Add it to your learning list
 3. Build your personal knowledge base
 
 ### Focus Timer
+
 1. **Set your duration**: Enter minutes (1-120) in the duration field
 2. **Name your task** (optional): What are you focusing on?
 3. **Start**: Click the green Start button
@@ -125,6 +135,7 @@ That's it! 🎉
 6. **Get notified**: Enjoy audio and visual alerts when time's up!
 
 ### Motivation
+
 - Click "New Quote" to get fresh inspiration
 - Quotes are categorized for variety
 - Let the wisdom fuel your productivity!
